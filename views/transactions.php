@@ -21,6 +21,12 @@
             tfoot tr th {
                 text-align: right;
             }
+            .green{
+                color : green;
+            }
+            .red{
+                color : red;
+            }
         </style>
     </head>
     <body>
@@ -34,20 +40,35 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- YOUR CODE -->
-            </tbody>
+                <?php if($transactions): ?>
+                <?php foreach($transactions as $transaction): ?>
+                    <tr>
+                        <td><?= dateFormater($transaction["date"]) ?></td>
+                        <td><?= $transaction["checkNo"] ?></td>
+                        <td><?= $transaction["description"] ?></td>
+                        <td>
+                        <span 
+                            class=<?= $transaction["amount"] > 0 ? "green" :( $transaction["amount"] < 0 ? "red" : "") ?>
+                        >
+                            <?= amountFormatter($transaction["amount"] )?>
+                        </span>    
+                       </td>
+                    </tr>
+                    <?php endforeach?>
+                    <?php endif ?>
+        </tbody>
             <tfoot>
                 <tr>
                     <th colspan="3">Total Income:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td><?= amountFormatter($income) ?></td>
                 </tr>
                 <tr>
                     <th colspan="3">Total Expense:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td><?= amountFormatter($expenses) ?></td>
                 </tr>
                 <tr>
                     <th colspan="3">Net Total:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td><?= amountFormatter($net_total) ?></td>
                 </tr>
             </tfoot>
         </table>
